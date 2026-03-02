@@ -1,42 +1,57 @@
-describe('Horse Racing Simulator E2E', () => {
+describe('Horse Racing Simulator (E2E)', () => {
   beforeEach(() => {
-    // Vite defaults to port 5173
     cy.visit('/')
   })
 
-  it('completes a full racing tournament lifecycle', () => {
-    // 1. Check Initial State
+  it('loads the dashboard and auto-generates the initial horse roster', () => {
     cy.contains('h1', 'Horse Racing Simulator').should('be.visible')
-    cy.contains('Horse Roster (20)').should('be.visible')
-    cy.get('button').contains('Start Race').should('be.disabled')
+    cy.contains('h2', 'Horse Roster (20)').should('be.visible')
+
+    cy.contains('button', 'Start Race').should('be.disabled')
     cy.contains('No schedule generated yet.').should('be.visible')
+    cy.contains('Awaiting race results...').should('be.visible')
+  })
 
-    // 2. Generate Schedule
-    cy.get('button').contains('Generate Schedule').click()
+  it('generates a schedule and unlocks the race controls', () => {
+    // Custom command
+    cy.generateSchedule()
 
-    // Check that schedule populated 6 rounds
+    // Verify UI updates
+    cy.contains('No schedule generated yet.').should('not.exist')
+    cy.contains('h2', 'Schedule').parent().contains('Round 1').should('be.visible')
+    cy.contains('h2', 'Schedule').parent().contains('Round 6').scrollIntoView().should('be.visible')
+    cy.contains('button', 'Start Race').should('not.be.disabled')
+  })
+
+  it('runs the tournament, skips to the end, and displays results', () => {
+    // Setup and start the race in one command!
+    cy.setupTournament()
+
+    // Verify the "Running" state locks controls
+    cy.contains('button', 'Reroll Horses').should('be.disabled')
+    cy.contains('button', 'Generate Schedule').should('be.disabled')
     cy.contains('Round 1').should('be.visible')
-    cy.contains('Round 6').should('be.visible')
 
-    // Start race button should now be enabled
-    cy.get('button').contains('Start Race').should('not.be.disabled')
+    // Fast-forward using our custom command
+    cy.fastForwardToEnd()
 
-    // 3. Start the Race
-    cy.get('button').contains('Start Race').click()
+    // Verify the "Finished" state
+    cy.contains('button', 'Replay Race').should('be.visible')
+    cy.contains('Awaiting race results...').should('not.exist')
+    cy.contains('h2', 'Results').parent().contains('Round 1').should('be.visible')
+    cy.contains('h2', 'Results').parent().contains('Round 6').scrollIntoView().should('be.visible')
+  })
 
-    // 4. Verify race progression
-    // The buttons should disable while running
-    cy.get('button').contains('Generate Schedule').should('be.disabled')
-    cy.get('button').contains('Reroll Horses').should('be.disabled')
+  it('allows the user to replay a finished tournament', () => {
+    // Quickly fly through a whole tournament
+    cy.setupTournament()
+    cy.fastForwardToEnd()
 
-    // We wait for the 6th round results to appear in the Results card.
-    // Each round takes ~3.8 seconds (3s base + 0.8s pause).
-    // Total race time is roughly 23-25 seconds, so we extend the Cypress timeout for this specific assertion.
-    cy.contains('Round 6 Results', { timeout: 30000 }).should('be.visible')
+    // Click Replay
+    cy.contains('button', 'Replay Race').click()
 
-    // 5. Verify finished state
-    // Buttons should re-enable
-    cy.get('button').contains('Generate Schedule').should('not.be.disabled')
-    cy.get('button').contains('Reroll Horses').should('not.be.disabled')
+    // Verify the game looped back to the running state correctly
+    cy.contains('button', 'Skip All').should('be.visible')
+    cy.contains('Awaiting race results...').should('be.visible')
   })
 })

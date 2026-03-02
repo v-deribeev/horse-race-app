@@ -2,7 +2,7 @@ export const randomInt = (min: number, max: number): number =>
   Math.floor(Math.random() * (max - min + 1)) + min
 
 export const randomHexColor = (): string =>
-  `#${Math.floor(Math.random() * 0xffffff)
+  `#${Math.floor(Math.random() * 0x1000000)
     .toString(16)
     .padStart(6, '0')}`
 
