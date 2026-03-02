@@ -5,8 +5,6 @@ import { generateHorses as domainGenerateHorses } from '@/domain/horse.factory'
 import { createRaceSchedule } from '@/domain/race.factory'
 import { runRaceRound } from '@/domain/race.engine'
 
-const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
-
 export const useRaceStore = defineStore('race', () => {
   const horses = ref<Horse[]>([])
   const schedule = ref<RaceRound[]>([])
@@ -89,7 +87,6 @@ export const useRaceStore = defineStore('race', () => {
       }
 
       // Normal Progression
-      // --- Normal Progression ---
       if (currentRoundResult.value) {
         results.value.push(currentRoundResult.value)
       }
@@ -98,25 +95,11 @@ export const useRaceStore = defineStore('race', () => {
       await nextTick()
 
       if (currentRoundIndex.value < schedule.value.length - 1) {
-        // 1. Wait at the finish line (User sees the podium glow)
-        await sleep(2000)
-
-        // 2. Wipe the track
+        // Wipe the track
         currentRoundResult.value = null
 
-        // CRITICAL FIX: Force Vue to explicitly render the empty track
-        // before we load the new horses.
-        await nextTick()
-
-        // 3. Advance to the next round's horses
+        // Advance to the next round's horses
         currentRoundIndex.value++
-
-        // CRITICAL FIX: Force Vue to explicitly render the new horses
-        // at the starting line before the starting gun goes off.
-        await nextTick()
-
-        // 4. Brief pause at the starting line
-        await sleep(250)
       } else {
         raceState.value = 'finished'
         break
