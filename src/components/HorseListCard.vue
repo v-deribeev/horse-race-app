@@ -10,18 +10,23 @@ const raceStore = useRaceStore()
       <li
         v-for="horse in raceStore.horses"
         :key="horse.id"
-        class="flex items-center justify-between p-2 rounded border bg-slate-50 hover:bg-slate-100 transition-colors"
+        class="flex justify-between items-center p-2 mb-2 mr-1 border border-slate-200 dark:border-slate-700 rounded-lg shadow-sm bg-white dark:bg-slate-800"
       >
         <div class="flex items-center gap-3">
           <div
-            class="w-6 h-6 rounded-full shadow-sm border border-black/10"
+            class="w-6 h-6 rounded-full border shadow-inner"
             :style="{ backgroundColor: horse.raceColor }"
           ></div>
-          <span class="font-medium text-slate-700">{{ horse.name }}</span>
+          <span class="font-bold text-slate-700 dark:text-slate-200">
+            {{ horse.name }}
+          </span>
         </div>
-        <div class="text-xs font-bold text-slate-500 bg-slate-200 px-2 py-1 rounded">
-          Cond: {{ horse.conditionScore }}
-        </div>
+
+        <span
+          class="bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 px-2 py-1 rounded font-bold text-sm min-w-[110px] text-center"
+        >
+          Condition: {{ horse.conditionScore }}
+        </span>
       </li>
     </ul>
   </div>

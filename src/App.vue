@@ -14,6 +14,7 @@ onMounted(() => {
   raceStore.generateHorses()
 })
 </script>
+
 <template>
   <main
     class="min-h-screen lg:h-screen flex flex-col bg-slate-50 dark:bg-slate-900 p-4 text-slate-900 dark:text-slate-100 transition-colors duration-300 overflow-x-hidden lg:overflow-hidden"
@@ -65,10 +66,9 @@ onMounted(() => {
       </div>
     </header>
 
-    <!-- HorseListCard -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 flex-1 lg:min-h-0 pb-8 lg:pb-0">
+    <div class="grid grid-cols-1 lg:grid-cols-15 gap-4 flex-1 lg:min-h-0 pb-8 lg:pb-0">
       <div
-        class="order-2 lg:order-1 lg:col-span-2 flex flex-col bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden h-75 lg:h-full"
+        class="order-2 lg:order-1 lg:col-span-3 flex flex-col bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden h-75 lg:h-full"
       >
         <h2
           class="font-bold text-base p-3 border-b border-slate-200 dark:border-slate-700 shrink-0"
@@ -80,9 +80,8 @@ onMounted(() => {
         </div>
       </div>
 
-      <!-- RaceTrack -->
       <div
-        class="order-1 lg:order-2 lg:col-span-5 flex flex-col bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden min-h-112.5 lg:min-h-0 lg:h-full"
+        class="order-1 lg:order-2 lg:col-span-6 flex flex-col bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden min-h-112.5 lg:min-h-0 lg:h-full"
       >
         <div
           class="flex justify-between items-center p-3 border-b border-slate-200 dark:border-slate-700 shrink-0"
@@ -108,7 +107,6 @@ onMounted(() => {
         </div>
       </div>
 
-      <!-- RaceScheduleCard -->
       <div
         class="order-3 lg:col-span-3 flex flex-col bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden h-75 lg:h-full"
       >
@@ -122,9 +120,8 @@ onMounted(() => {
         </div>
       </div>
 
-      <!-- ResultsCard -->
       <div
-        class="order-4 lg:col-span-2 flex flex-col bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden h-75 lg:h-full"
+        class="order-4 lg:col-span-3 flex flex-col bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden h-75 lg:h-full"
       >
         <h2
           class="font-bold text-base p-3 border-b border-slate-200 dark:border-slate-700 shrink-0"
