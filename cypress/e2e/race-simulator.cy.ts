@@ -24,7 +24,7 @@ describe('Horse Racing Simulator (E2E)', () => {
   })
 
   it('runs the tournament, skips to the end, and displays results', () => {
-    // Setup and start the race in one command!
+    // Setup and start the race in one command
     cy.setupTournament()
 
     // Verify the "Running" state locks controls

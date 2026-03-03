@@ -4,7 +4,6 @@ import { useRaceStore } from '@/stores/race.store'
 
 const raceStore = useRaceStore()
 
-// This keeps track of which round is currently expanded
 const expandedRound = ref<number | null>(null)
 
 const toggle = (roundNum: number) => {

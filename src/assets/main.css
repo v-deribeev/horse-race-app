@@ -1,6 +1,5 @@
 @import 'tailwindcss';
 
-/* Optional: Keep the smooth custom scrollbar we added earlier, with dark mode support */
 .custom-scrollbar::-webkit-scrollbar {
   width: 6px;
 }

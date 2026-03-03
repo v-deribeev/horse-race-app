@@ -31,7 +31,7 @@ describe('Domain Layer: Race Engine', () => {
     // STUB: Remove all random luck from the race equation
     vi.spyOn(Math, 'random').mockReturnValue(0.5)
 
-    // Create 3 horses with distinctly different conditions
+    // Create 3 horses with different conditions
     const mockHorses: Horse[] = [
       { id: 'h1', name: 'Slow', conditionScore: 10, raceColor: '#000' },
       { id: 'h2', name: 'Fast', conditionScore: 99, raceColor: '#000' },
@@ -40,7 +40,7 @@ describe('Domain Layer: Race Engine', () => {
 
     const result = runRaceRound({ roundNumber: 1, length: 1200, horses: mockHorses })
 
-    // Because we stubbed the randomness, the horse with the highest condition MUST win
+    // Stubbed randomness, the horse with the highest condition MUST win
     const finishingOrder = result.placements.map((horse) => horse.id)
 
     // Assert the exact expected order in one clean line

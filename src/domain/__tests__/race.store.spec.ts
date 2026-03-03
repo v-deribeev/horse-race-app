@@ -48,7 +48,7 @@ describe('Store: Race Store', () => {
   })
 
   it('skipAll forces state to finished instantly', () => {
-    store.raceState = 'running' // Fake that we are mid-race
+    store.raceState = 'running' // Fake mid-race
     store.skipAll()
     expect(store.raceState).toBe('finished')
   })

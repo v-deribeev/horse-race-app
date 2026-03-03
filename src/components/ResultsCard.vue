@@ -4,7 +4,6 @@ import { useRaceStore } from '@/stores/race.store'
 
 const raceStore = useRaceStore()
 
-// Track which round is expanded
 const expandedRound = ref<number | null>(null)
 
 const toggle = (roundNum: number) => {
@@ -16,7 +15,6 @@ watch(
   () => raceStore.results.length,
   (newLength) => {
     if (newLength > 0) {
-      // Safely get the last result's round number
       const latestResult = raceStore.results[newLength - 1]
       if (latestResult) {
         expandedRound.value = latestResult.roundNumber

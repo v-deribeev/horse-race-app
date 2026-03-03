@@ -22,14 +22,12 @@ const currentRound = computed(() => {
 watch(
   () => raceStore.currentRoundResult,
   async (newResult) => {
-    // 1. Instantly kill any currently running animation
     if (animationFrameId) {
       cancelAnimationFrame(animationFrameId)
       animationFrameId = null
     }
 
-    // THE FIX: If the store clears the result between rounds, wipe the track clean!
-    // This removes all ghost placements from overlapping horses.
+    // If the store clears the result between rounds, wipe the track clean!
     if (!newResult) {
       horseProgress.value = {}
       placementsMap.value = {}
@@ -46,9 +44,9 @@ watch(
       placementsMap.value[h.id] = index + 1
     })
 
-    // 2. The "Skip All" handler:
+    // "Skip All" handler:
     // If the state is finished, instantly snap all horses to the finish line
-    // and abort the animation loop entirely.
+    // and abort the animation loop entirely
     if (raceStore.raceState === 'finished') {
       currentRound.value.horses.forEach((h) => {
         horseProgress.value[h.id] = 100
@@ -56,7 +54,7 @@ watch(
       return
     }
 
-    // 3. Normal Animation Setup
+    // Normal Animation Setup
     horseProgress.value = {}
 
     await nextTick()
@@ -80,7 +78,6 @@ watch(
 
       if (allFinished) {
         // UI Safety Buffer: Force the browser to hold the final winning frame
-        // for just a split second before telling the Store we are done.
         setTimeout(() => {
           raceStore.completeRoundAnimation()
         }, 1000)

@@ -1,9 +1,8 @@
 import { describe, it, expect, vi, afterEach } from 'vitest'
-import { randomInt, randomHexColor, createUniqueGenerator, pickRandom } from '../random.utils' // adjust path if necessary
+import { randomInt, randomHexColor, createUniqueGenerator, pickRandom } from '../random.utils'
 
 describe('Utils: Random', () => {
   afterEach(() => {
-    // Crucial: always restore Math.random after overriding it
     vi.restoreAllMocks()
   })
 
